@@ -1,10 +1,11 @@
 require('dotenv').config()
 
 const express = require('express')
+const ejs = require('ejs')
 const cors = require('cors')
 const app = express()
 const port = process.env.port
-const authMid = require()
+// const authMid = require()
 const corsOptions = {
     origin: '*',
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
@@ -25,9 +26,11 @@ app.set('view engine', ejs)
 // static directories
 app.use(express.static('/assets'))
 
-app.use(authMid)
+// app.use(authMid)
 
 // fire routes
+const penjualan = require('./routes/penjualan')
+app.use(penjualan)
 
 
 // test server

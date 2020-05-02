@@ -1,46 +1,78 @@
 const express = require('express')
 const Penjualan = require('../models/penjualan')
+const Terjual = require('../models/barang_terjual')
 const router = express.Router()
-// const excelConfig = require('../middleware/excel')
-// const {fileDir, upload}  = require('../middleware/uploadRecruitment')
-// const uploadFile = require('../middleware/uploadFile')
 const request = require('request')
-const pool = require('../conn')
 
-const excel = require('excel4node')
-const workbook = new excel.Workbook()
 
-const header = workbook.createStyle({
-    font: {
-      color: 'white',
-      size: 14,
-      align: 'center',
-      bold: true
-    },
-    fill: {
-        type: 'pattern',
-        patternType: 'solid',
-        bgColor: 'black',
-        fgColor: 'black'
-    },
-    alignment: {
-        horizontal: 'center'
+router.get("/penjualan", (req, res) => {
+  Penjualan.findAll().then(_penjualan => {
+    // res.json({data : penjualan})
+    Terjual.findAll().then(_terjual => {
+      res.render('CMS/lihat-penjualan.ejs', JSON.stringify({data: _penjualan, data1: _terjual}))
+    })
+    // res.render('CMS/lihat-penjualan', {data: _penjualan})
+    
+  })
+})
+
+router.get("/penjualan/:id_penjualan", (req, res) => {
+  Penjualan.findOne({
+    where: {id_penjualan : req.params.id_penjualan}
+  }).then(division => {
+    if (!division) {
+      return res.json({"msg" : "data not found"})
     }
-    // numberFormat: '$#,##0.00; ($#,##0.00); -',
-  });
-const column = workbook.createStyle({
-    font: {
-      color: 'black',
-      size: 12,
+    res.json({data : id-penjualan})
+  })
+})
+
+router.post("/penjualan", (req, res) => {
+  Penjualan.create({
+    type : req.body.type,
+    value : req.body.value
+  }).then(penjualan => {
+    res.json({data : penjualan})
+  })
+})
+
+router.put("/penjualan/:id_penjualan", (req, res) => {
+  request(req.protocol + "://" + req.headers.host + "/penjualan/" + req.params.id_penjualan, {json: true}, (err, res2, body) => {
+    if (body.data == undefined) {
+      res.json({msg : "data not found"})
+    } else {
+        Penjualan.update({
+            type : req.body.type,
+            value : req.body.value
+        }, {
+            where : { id_penjualan: req.params.id_penjualan },
+            returning : true,
+            plain : true
+        }).then(affectedRow => {
+            return Penjualan.findOne({where: {id_penjualan: req.params.id_penjualan}})      
+        }).then(b => {
+            res.json({
+                "status" : "success",
+                "message" : "data updated",
+                "data" : b
+            })
+        })
     }
-    // numberFormat: '$#,##0.00; ($#,##0.00); -',
-  });
+  })
+})
 
-async function asyncForEach(array, callback) {
-    for (let index = 0; index < array.length; index++) {
-      await callback(array[index], index, array);
+router.delete("/penjualan/:id_penjualan", (req, res) => {
+  request(req.protocol + "://" + req.headers.host + "/penjualan/" + req.params.id_social, { json: true}, (err, res2, body) => {
+    if (body.data == undefined) {
+      res.json({msg : "data not found"})
     }
-}
+    else {
+      Penjualan.destroy({where: {id_penjualan: req.params.id_penjualan}}).then(division => {
+        res.json({msg : "data deleted"})
+      })
+    }
+  })
+})
 
-
+module.exports = router
 
