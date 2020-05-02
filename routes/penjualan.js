@@ -4,12 +4,15 @@ const Terjual = require('../models/barang_terjual')
 const router = express.Router()
 const request = require('request')
 
+router.get("/test", (req, res) => {
+  res.render("CMS/sidebar")
+})
 
 router.get("/penjualan", (req, res) => {
   Penjualan.findAll().then(_penjualan => {
     // res.json({data : penjualan})
     Terjual.findAll().then(_terjual => {
-      res.render('CMS/lihat-penjualan.ejs', JSON.stringify({data: _penjualan, data1: _terjual}))
+      res.render('CMS/lihat-penjualan', JSON.stringify({data: _penjualan, data1: _terjual}))
     })
     // res.render('CMS/lihat-penjualan', {data: _penjualan})
     
@@ -27,16 +30,21 @@ router.get("/penjualan/:id_penjualan", (req, res) => {
   })
 })
 
-router.post("/penjualan", (req, res) => {
+router.get("/tambah-penjualan", (req, res) => {
+  res.render("CMS/input-penjualan")
+})
+
+router.post("/tambah-penjualan", (req, res) => {
   Penjualan.create({
-    type : req.body.type,
-    value : req.body.value
+    tanggal : req.body.tanggal,
+    nama_barang : req.body.nama_barang,
+    kuantitas_barang : req.body.kuantitas_barang
   }).then(penjualan => {
     res.json({data : penjualan})
   })
 })
 
-router.put("/penjualan/:id_penjualan", (req, res) => {
+router.put("/tambah-penjualan/:id_penjualan", (req, res) => {
   request(req.protocol + "://" + req.headers.host + "/penjualan/" + req.params.id_penjualan, {json: true}, (err, res2, body) => {
     if (body.data == undefined) {
       res.json({msg : "data not found"})
@@ -61,7 +69,7 @@ router.put("/penjualan/:id_penjualan", (req, res) => {
   })
 })
 
-router.delete("/penjualan/:id_penjualan", (req, res) => {
+router.delete("/tambah-penjualan/:id_penjualan", (req, res) => {
   request(req.protocol + "://" + req.headers.host + "/penjualan/" + req.params.id_social, { json: true}, (err, res2, body) => {
     if (body.data == undefined) {
       res.json({msg : "data not found"})

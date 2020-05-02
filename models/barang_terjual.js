@@ -9,8 +9,7 @@ const barang_terjual = db.define('barang_terjual',{
     },
     'id_penjualan': {
         type: Sequelize.INTEGER,
-        foreignKey: true,
-        autoIncrement: true
+        foreignKey: true
     },
     'nama_barang_terjual': Sequelize.STRING,
     'kuantitas_barang_terjual': Sequelize.INTEGER,
@@ -18,8 +17,8 @@ const barang_terjual = db.define('barang_terjual',{
 
 }, {
     // prevent sequelize transform table name into plural
-    freezeTableName: true,
-    timestamp: false
+    // freezeTableName: true,
+    // timestamp: false
 
 })
 

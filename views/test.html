@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    </head>
+    <body>
+        <script>
+            $(document).ready(function () {
+
+                $(document).on("change",".provider-append input",function(){
+                    var allHaveText;
+                    var parentDiv = $(this).closest("div.provider-append");
+                    emptyInputs=parentDiv.find("input[type=text]").filter(function () {
+                        return !this.value;
+                    });                  
+                    if(emptyInputs.length==0)
+                    {
+                        newGroup = parentDiv.clone().appendTo(".new-providers"); 
+                        newGroup.find("input[type=text]").each(function(){
+                            $(this).val("");
+                        });
+                    }
+                });
+
+            });
+        </script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <div class="new-providers">
+
+        <div class="provider-append">
+            <div class="form-group">
+            <label>Provider</label>
+            <input type="text" class="form-control" placeholder="Full provider name with coredentials" />
+            </div>
+            <div class="form-group">
+            <label>NPI</label>
+            <input type="text" class="form-control" placeholder=" NPI" />
+            </div>
+            <div class="form-group">
+            <label>MM #</label>
+            <input type="text" class="form-control" placeholder="M Provider #" />
+            </div>
+
+            <hr />
+        </div>
+
+        </div>
+    </body>
+</html>

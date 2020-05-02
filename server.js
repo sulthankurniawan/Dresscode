@@ -21,7 +21,7 @@ app.use(bodyParser.json()) // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true})) // support encoded bodies
 
 // set up template engine
-app.set('view engine', ejs)
+app.set('view engine', 'ejs')
 
 // static directories
 app.use(express.static('/assets'))

@@ -9,12 +9,11 @@ const penjualan = db.define('penjualan', {
     },
     'tanggal': Sequelize.STRING,
     'catatan': Sequelize.STRING,
-    'status': Sequelize.BOOLEAN
-    
+    'status': Sequelize.BOOLEAN  
 }, {
     // prevent sequelize transform table name into plural
-    freezeTableName: true,
-    timestamp: false
+    // freezeTableName: true,
+    // timestamp: false
 
 })
 

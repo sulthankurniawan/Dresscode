@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 02 Bulan Mei 2020 pada 18.02
+-- Waktu pembuatan: 02 Bulan Mei 2020 pada 18.13
 -- Versi server: 10.1.38-MariaDB
 -- Versi PHP: 7.3.3
 
@@ -19,22 +19,8 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `dresscode`
+-- Database: `db_dresscode`
 --
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `barang_terjual`
---
-
-CREATE TABLE `barang_terjual` (
-  `id_barang_terjual` int(20) NOT NULL,
-  `id_penjualan` int(20) NOT NULL,
-  `nama_barang_terjual` varchar(200) NOT NULL,
-  `kuantitas_barang_terjual` int(2) NOT NULL,
-  `harga_barang_terjual` int(7) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -54,13 +40,6 @@ CREATE TABLE `penjualan` (
 --
 
 --
--- Indeks untuk tabel `barang_terjual`
---
-ALTER TABLE `barang_terjual`
-  ADD PRIMARY KEY (`id_barang_terjual`),
-  ADD KEY `id_penjualan` (`id_penjualan`);
-
---
 -- Indeks untuk tabel `penjualan`
 --
 ALTER TABLE `penjualan`
@@ -71,26 +50,10 @@ ALTER TABLE `penjualan`
 --
 
 --
--- AUTO_INCREMENT untuk tabel `barang_terjual`
---
-ALTER TABLE `barang_terjual`
-  MODIFY `id_barang_terjual` int(20) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT untuk tabel `penjualan`
 --
 ALTER TABLE `penjualan`
   MODIFY `id_penjualan` int(20) NOT NULL AUTO_INCREMENT;
-
---
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
---
-
---
--- Ketidakleluasaan untuk tabel `barang_terjual`
---
-ALTER TABLE `barang_terjual`
-  ADD CONSTRAINT `fk_penjualan` FOREIGN KEY (`id_penjualan`) REFERENCES `penjualan` (`id_penjualan`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
